@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+        <input class="msg"/>
+        <button class="btn">Send!</button>
+    </div>
+    <script>
+      const ws = new WebSocket("ws://localhost:4000");
+      const input = document.querySelector('.msg')
+      const btn = document.querySelector('.btn')
+
+      ws.onopen = () => {
+        console.log('websocket is connected');
+        ws.send('ping')
+      }
+
+      ws.onclose = () => {
+        console.log('websocket is disconnected');
+      }
+
+      btn.addEventListener('click', (e) => {
+        const msg = input.value;
+        ws.send({id: msg})
+      })
+
+    //   ws.addEventListener("open", () => {
+    //     console.log("WebSocket connection established");
+    //     ws.send("Hello, server!");
+    //   });
+
+    //   ws.addEventListener("message", (event) => {
+    //     console.log(`Received message from server: ${event.data}`);
+    //   });
+
+    //   ws.addEventListener("close", () => {
+    //     console.log("WebSocket connection closed");
+    //   });
+    </script>
+  </body>
+</html>
